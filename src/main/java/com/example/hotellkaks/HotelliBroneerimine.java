@@ -22,11 +22,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
-public class EsimeneLeht extends Application {
+public class HotelliBroneerimine extends Application {
+
+
     private Color põhivärv = Color.rgb(241, 218, 196);
     private Color sekundaarneVärv = Color.rgb(112, 163, 127);
     private Color kolmasVärv = Color.rgb(68, 69, 69);
@@ -133,14 +139,14 @@ public class EsimeneLeht extends Application {
         TextField perenimi = infoSisestamine("Sisestage perenimi");
         infoKast.add(perenimi, 1, 2);
         // külastajate arv
-        TextField külastajad = infoSisestamine("Sisestage külastajate arv (2 või 4)");
+        TextField külastajad = infoSisestamine("Sisestage külastajate arv (kuni 4)");
         infoKast.add(külastajad, 1, 3);
         // nupud vip ja tava toa jaoks
-        Button tavalineTuba = nupp("Broneeri tavaline tuba", 12, 150, 50, kolmasVärv, sekundaarneVärv);
+        Button tavalineTuba = nupp("Broneeri tavaline tuba", 12, 150, 50, kolmasVärv, põhivärv);
         infoKast.add(tavalineTuba, 1, 4);
         // nuppude vajutamine
         nupuVajutamine(tavalineTuba, eesnimi, perenimi, külastajad, false);
-        Button vipTuba = nupp("Broneeri VIP tuba", 12, 150, 50, kolmasVärv, sekundaarneVärv);
+        Button vipTuba = nupp("Broneeri VIP tuba", 12, 150, 50, kolmasVärv, põhivärv);
         infoKast.add(vipTuba, 1, 5);
         nupuVajutamine(vipTuba, eesnimi, perenimi, külastajad, true);
         // taust
@@ -151,9 +157,15 @@ public class EsimeneLeht extends Application {
         ümarTaust.setArcHeight(40);
         infoKast.add(ümarTaust, 3, 0, 2, 6);
         // pilt
-        Image pilt = new Image("https://th.bing.com/th/id/R.aa9c5a5c0893f16b624d475cd429e2d6?rik=kWxHis1fd%2fDLDw&riu=http%3a%2f%2f2.bp.blogspot.com%2f-MSgpbdbIEz4%2fTyJqMo_J36I%2fAAAAAAAAC4I%2fZsaUFjHX3Z8%2fw1200-h630-p-k-no-nu%2fgothia_towers_166180343.jpg&ehk=YjCoYIajjl9dATs6RlFFwOhsRhMf5n0UaOdVBdV9zAQ%3d&risl=&pid=ImgRaw&r=0",
-                infoKast.getWidth() / 2 - 50, infoKast.getHeight() - 40, true, true);
+        Image pilt = null;
+        try {
+            pilt = new Image(new FileInputStream("Hotell.png"),
+                    infoKast.getWidth() / 2 - 40, infoKast.getHeight(), true, true);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Node hotelliPilt = new ImageView(pilt);
+
         infoKast.add(hotelliPilt, 4, 0, 2, 6);
     }
 
@@ -180,9 +192,9 @@ public class EsimeneLeht extends Application {
         nimeTeavitus.setFont(new Font("Amagro Amagro", 25));
 
         // Tuba leiti broneeringuks
-        if (broneering != null){
+        if (broneering != null) {
             Label õnnestumiseTeavitus = new Label("Teie hotelli tuba on broneeritud!");
-            Label toaNumbriTeavitus = new Label( "Toa number: " + broneering.split(";")[0]);
+            Label toaNumbriTeavitus = new Label("Toa number: " + broneering.split(";")[0]);
 
             õnnestumiseTeavitus.setFont(new Font("Amagro Amagro", 15));
             toaNumbriTeavitus.setFont(new Font("Amagro Amagro", 15));
@@ -195,9 +207,7 @@ public class EsimeneLeht extends Application {
 
             infoKast.add(õnnestumiseTeavitus, 0, 2);
             infoKast.add(toaNumbriTeavitus, 0, 3);
-        }
-
-        else {
+        } else {
             Label eiÕnnestunudTeavitus = new Label("Kahjuks me ei leidnud ühtegi otsitavat vaba tuba");
             Label prooviUuesti = new Label("Palun proovi mõne aja pärast uuesti");
 
@@ -239,6 +249,7 @@ public class EsimeneLeht extends Application {
         tuba.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 // erindid
+                // erindid
                 if (eesnimi.getText().length() <= 1) {
                     try {
                         throw new NimiEiSobiErind(eesnimi.getText());
@@ -253,13 +264,19 @@ public class EsimeneLeht extends Application {
                             perenimi.setText(e.toString());
                         }
                     } else {
-                        if (!külastajad.getText().equals("2") && !külastajad.getText().equals("4")) {
+
+                        List<String> arvud = new ArrayList<String>(4);
+                        arvud.add("1");
+                        arvud.add("2");
+                        arvud.add("3");
+                        arvud.add("4");
+                        if (!arvud.contains(külastajad.getText())) {
                             try {
                                 throw new KülastajateArvEiSobi(külastajad.getText());
                             } catch (KülastajateArvEiSobi e) {
                                 külastajad.setText(e.toString());
                             }
-                        } else {
+                        }else {
                             // siin tuleks kontrollida, kas sellist tuba leidub
                             if (vip == false) {
                                 kasVIP = false;
@@ -312,3 +329,4 @@ public class EsimeneLeht extends Application {
         launch();
     }
 }
+
