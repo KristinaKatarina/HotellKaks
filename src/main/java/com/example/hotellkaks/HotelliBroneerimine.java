@@ -55,11 +55,11 @@ public class HotelliBroneerimine extends Application {
     }
 
     public void esimeneLeht() {
+        // Hotelli broneerimise avalehe kujundus
         infoKast = new GridPane(); // roheline kast
         infoKast.setMaxSize(juur.getWidth() / 1.15, juur.getHeight() / 1.15);
         infoKast.setBackground(new Background(new BackgroundFill(sekundaarneVärv, new CornerRadii(20), null)));
-        // kood, et rohelisele kastile raam ümber panna (ma ei suutnud otsustada kuidas parem välja näeb)
-        //infoKast.setBorder(new Border(new BorderStroke(kolmasVärv, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(1.5))));
+
         // infokasti alad
         infoKast.getColumnConstraints().addAll(new ColumnConstraints(110), // ruum enne nime
                 new ColumnConstraints(50), //  ruum enne kriipsu
@@ -105,6 +105,7 @@ public class HotelliBroneerimine extends Application {
     }
 
     public Button nupp(String tekst, int tekstiSuurus, double nupuLaius, double nupuKõrgus, Color taustavärv, Color tekstiVärv) {
+        // meetod nupu loomiseks (parameetritena on antud nupu kujundusega seonduvad muutujad)
         Button nupp = new Button(tekst);
         nupp.setFont(new Font("Amagro Amagro", tekstiSuurus));
         nupp.setPrefSize(nupuLaius, nupuKõrgus);
@@ -123,12 +124,13 @@ public class HotelliBroneerimine extends Application {
     }
 
     public void teineLeht() {
+        // Broneeringu andmete sisestamise kujundus
         infoKast.getColumnConstraints().addAll(new ColumnConstraints(20),
                 new ColumnConstraints(infoKast.getWidth() / 2 - 10),
                 new ColumnConstraints(10),
                 new ColumnConstraints(20),
                 new ColumnConstraints(5));
-        //infoKast.getRowConstraints().addAll(new RowConstraints(20)); // tühi ruum
+
         infoKast.setVgap(20);
         // eesnimi
         TextField eesnimi = infoSisestamine("Sisestage eesnimi");
@@ -249,6 +251,8 @@ public class HotelliBroneerimine extends Application {
     }
 
     public void nupuVajutamine(Button tuba, TextField eesnimi, TextField perenimi, TextField külastajad, boolean vip) {
+        // Kood kui nuppu vajutatakse "teisel lehel"
+        // parameetritega on antud nupp, mida kood käsitleb ja TextField-id, mida kood võib vajadusel muuta
         tuba.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
 
@@ -308,6 +312,7 @@ public class HotelliBroneerimine extends Application {
     }
 
     private TextField infoSisestamine(String tekst) {
+        // tekitab ette antud tekstiga TextFieldi
         TextField sisestamine = new TextField();
         sisestamine.setText(tekst);
         sisestamine.setPrefSize(infoKast.getWidth() / 2.5, 30);
