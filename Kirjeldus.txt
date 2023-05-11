@@ -1,0 +1,63 @@
+Autorite nimed: Marko Smirnov, Kristina Katarina Kaljumäe
+
+Projekti kirjeldus, eesmärk ja selgitus:
+
+Tarvis oli koostada kasutajaliidesega programm, mis aitaks hotellil Paragon kergemini hotellitubasi
+broneerida ning tubade kohta infot salvestada (mis tuba on kinni või mitte). Programmi esimesel käivitamisel luuakse
+programmikausta fail 'andmebaas.txt', kuhu kirjutatakse kõik toad lahtisesseolekusse vaikeväärtusena. Kui fail on
+programmikasutas olemas, hakatakse otsima vastavalt kliendisisendile kas mõni otsitav tuba leitub. Kui selline tuba leidub,
+broneeritakse kliendile tuba (salvestatakse andmebaas.txt failis kinnisesse olekusse) ning kuvatakse vastav teavitus.
+Kui see ei õnnestunud, kuvatakse ka vastav teavitus.
+
+Iga klassi kohta eraldi selle eesmärk ja olulisemad meetodid:
+
+Klassis HotelliBroneerimine käib programmi põhitöö. Selles klassis realiseeritakse kasutajaliides,
+küsitakse kliendilt vajalikud sisendid, mis suunatakse eraldi teistele klassidele kontrolliks või salvestamiseks.
+
+Klassis LisaBroneerig käib programmi tasutatöö, kus vastavalt kasutajaliidese sisenditele, kontrollitakse kas failis 'andmebaas.txt'
+leidub mõni broneeringuks vaba tuba. Kui selline tuba leidub, siis kirjutatakse faili otsitav tuba kinnisesse olekusse (olekusse 1).
+Andmebaasi kirjed koosnevad järgmiselt: (TOA_NUMBER);(MITME INIMESE TUBA);(LAHTI VÕI KINNI, EHK 0 VÕI 1);(TAVALINE VÕI VIP TUBA).
+
+Klassis Vaikekaivitus kontrollitakse programmikasutas kas fail 'andmebaas.txt' leidub. Kui selline fail ei leidu, siis
+luuakse see fail ning ka sellega kaasnevad vaikeväärtused (kõik toad lahtises olekus). Kui otsitav fail eksisteerib, tagastab
+meetod andmebaasOlemas() tõeväärtuse true ning minnakse programmitööga edasi, ilma, et faili üle krijutatakse.
+
+Olulistema meetodite alla käivad meetodid nagu esimeneLeht(), teineLeht() ja kolmasLeht(int külastajad, boolean kasVIP)
+kuna need meetodid realiseerivad kasutajaliidest, mille sisendite peale toetuvad enamik teisi klasse ja meetodeid.
+
+Projekti tegemise protsessi kirjeldus:
+
+Tulenevalt rühmatöö number ühest, oleme seekord mõlemad hästi ideega kursis ning ei olnud tarvis palju kokku saada ja suhelda.
+Projekti alustasime siiski ikka koosolekust, kus käisime üle vajalikud etapid, kes millise töö endale võtab. Püstitasime
+eesmärgid nagu kes millise kasutajaliidese ekna teeb, kes kirjutab vajaliku "tagatausta" koodi, ehk meetodid Vaikekaivitus
+ja LisaBroneering aga ka samuti vajalikud erindiklassid. Peale esimest kohtumist oli meil mõlemal visioon selge järgi jäänud oli
+vaid töö panustamine - sellega saime mõlemad hästi hakkama. Teine ja viimane kohtumine toimus kaks päeva pärast esimest kohtumist
+ning selle eesmärgiks oli näidata kui kaugele oleme oma töödega jõudnud. Kui mõlemad osapooled olid oma töödega valmis jõudnud,
+oli tarvis ühendada üksteise kirjutatud kood ning realiseerida programmi planeeritud toimimine. Kui see oli valmis, hakkas
+programm toimima nii nagu esialgselt planeeritud oli. Lõpus lisasime meetoditele vajalikud kommentaarid.
+
+Iga rühmaliikme panus ja ajakulu:
+
+Nii öelda "esimese lehe" ehk avalehe tegi Kristina. Broneeringu kinnituse akna ehk "kolmanda lehe" tegi Marko. Broneeringu
+andmete sisestamise lehe ehk "teise lehe" tegemise jaotasime omavahel nõnda ära, et Kristina tegi lehe kujunduse
+(üldine kujundus, nupud, pilt, TextField-id ja nendega seonduvad erindid) ning Marko tegeles sellega, et kood leiaks andmebaas.txt-ist
+ülesse, kas kasutaja soovidele vastavat tuba leidub. Mõlema ajakulu projektile oli orienteeruvalt 6-8 tundi.
+
+Tegemise mured (nt millistest teadmistest/oskustest tundsite projekti tegemisel puudust);
+
+Algselt oli natukene keeruline lehte nõnda kujundada, et kõik ilus välja näeks ja, et ka lehe suurendamisel midagi paigast
+ei läheks, aga peale natukene harjutamist sai see juba kõvasti selgemaks. Üldiselt ei olnud aga midagi, mis palju probleeme
+oleks tekitanud.
+
+Hinnang oma töö lõpptulemusele:
+
+Üldiselt oleme tehtud töö üle õnnelikud. Kasutajaliides näeb hea välja ning tekstifailist andmete lugemine ja sinna kirjutamine
+toimib korrektselt. Midagi mida saaks veel tulevikus arendada on see, et roheline kast, mille sees on kõik info võiks lehe
+suurendamisel ka suureneda, et lehe välimus oleks asteetilisem.
+
+Selgitus ja/või näited, kuidas programmi osi eraldi ja programmi tervikuna testisite ehk kuidas veendusite, et programm töötab korrektselt:
+
+Algselt kui ei olnud veel tekstifailist andmete lugemise süsteemi, siis lihtsalt jooksutasime koodi ja vaatasime, et kõik
+näeks visuaalselt selline välja nagu ette kujutasime ja, et akna suurendamisel midagi ei muutuks. Üritasime ka TextField-idesse
+sisestada igasuguseid erinevaid andmeid ja teha kindlaks, et erindid on asjakohased. Hiljem kui olime loonud ka tekstifaili
+süsteemi, siis üritasime andmebaas.txt-es andmeid muutes, kas kood teeb jätkuvalt seda, mida soovime.
