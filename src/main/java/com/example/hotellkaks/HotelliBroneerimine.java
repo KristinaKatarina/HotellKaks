@@ -32,7 +32,6 @@ import java.util.List;
 
 public class HotelliBroneerimine extends Application {
 
-
     private Color põhivärv = Color.rgb(241, 218, 196);
     private Color sekundaarneVärv = Color.rgb(112, 163, 127);
     private Color kolmasVärv = Color.rgb(68, 69, 69);
@@ -44,7 +43,6 @@ public class HotelliBroneerimine extends Application {
     private boolean kasVIP;
     private int külastajateArv;
     private String külastajaNimi;
-
     private GridPane infoKast;
 
     public void start(Stage lava) {
@@ -170,12 +168,14 @@ public class HotelliBroneerimine extends Application {
     }
 
     private void kolmasLeht(int külastajad, boolean kasVIP) throws IOException {
+        // Meetod võtab argumentideks külaliste arvu ühe toa broneeringuks ning tõeväärtuse kas otsitav tuba
+        // on VIP või mitte.
+        // Meetodis otsitakse üles sobiv tuba failist 'andmebaas.txt' ning väljastatakse ekraanile vastav teavitus
+        // kas broneering õnnestus või mitte.
 
-        LisaBroneering lisaBroneering = new LisaBroneering(); // andmebaasi hakatakse siin kirjutama.
-        String broneering = lisaBroneering.kirjutaBroneering(külastajad, kasVIP); // Lisab broneeringu andmebaasi ja tagastab toa sõne kujul.
+        LisaBroneering lisaBroneering = new LisaBroneering();
+        String broneering = lisaBroneering.kirjutaBroneering(külastajad, kasVIP);
 
-        //infoKast.getColumnConstraints().addAll(new ColumnConstraints(0), // 0
-        //new ColumnConstraints(400)); // 1
         ColumnConstraints column1 = new ColumnConstraints();
 
         column1.setPercentWidth(100);
@@ -187,7 +187,7 @@ public class HotelliBroneerimine extends Application {
                 new RowConstraints(30),
                 new RowConstraints(100));
 
-        // Õnnestus leida tuba
+        // Nime teavitus kolmandas ekraanis.
         Label nimeTeavitus = new Label("Lugupeetud " + külastajaNimi);
         nimeTeavitus.setFont(new Font("Amagro Amagro", 25));
 
@@ -207,7 +207,10 @@ public class HotelliBroneerimine extends Application {
 
             infoKast.add(õnnestumiseTeavitus, 0, 2);
             infoKast.add(toaNumbriTeavitus, 0, 3);
-        } else {
+
+        }
+        // Tuba ei leitud broneeringuks
+        else {
             Label eiÕnnestunudTeavitus = new Label("Kahjuks me ei leidnud ühtegi otsitavat vaba tuba");
             Label prooviUuesti = new Label("Palun proovi mõne aja pärast uuesti");
 
@@ -248,7 +251,7 @@ public class HotelliBroneerimine extends Application {
     public void nupuVajutamine(Button tuba, TextField eesnimi, TextField perenimi, TextField külastajad, boolean vip) {
         tuba.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                // erindid
+
                 // erindid
                 if (eesnimi.getText().length() <= 1) {
                     try {
@@ -277,7 +280,7 @@ public class HotelliBroneerimine extends Application {
                                 külastajad.setText(e.toString());
                             }
                         }else {
-                            // siin tuleks kontrollida, kas sellist tuba leidub
+
                             if (vip == false) {
                                 kasVIP = false;
                             } else {
@@ -289,9 +292,6 @@ public class HotelliBroneerimine extends Application {
                             infoKast.getColumnConstraints().clear();
                             infoKast.getRowConstraints().clear();
                             infoKast.getChildren().clear();
-
-                            // siia meetod, kus on kolmanda lehe kujundus
-                            // Smirksi kood:
 
                             try {
                                 kolmasLeht(külastajateArv, kasVIP);
